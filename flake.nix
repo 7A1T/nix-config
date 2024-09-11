@@ -15,8 +15,8 @@
 
     # nixvim
     nixvim.url = "github:dc-tec/nixvim";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
-
   outputs = {
     self,
     nixpkgs,

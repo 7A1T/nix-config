@@ -73,6 +73,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.useOSProber = true;
 
+  # enable kde
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.desktopmanager.plasma6.enable = true;
+  services.xserver.displayManager.sddm.settings.General.DisplayServer = "x11-user";
+
   networking.hostName = "nixos";
   # networking.wireless.enable = true; # enables wireless support via wpa_supplicant
 
@@ -93,14 +99,6 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
-
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.settings.General.DisplayServer = "x11-user";
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -141,7 +139,7 @@
       initialPassword = "12345";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
-        OKJPy8JjKWmWeEkak20mKU1ct4k/zdfp12e6EV/GJ0s
+        # TODO: add auth keys
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = ["networkmanager" "wheel"];
@@ -149,8 +147,8 @@
   };
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "taitvs";
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "taitvs";
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
