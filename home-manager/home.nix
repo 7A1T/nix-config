@@ -7,16 +7,7 @@
   config,
   pkgs,
   ...
-}: let
-  nixvim' = inputs.nixvim.packages.system.default;
-  nvim = nixvim'.extend {
-    plugins.lsp.servers.rust-analyzer = {
-      enable = true;
-      installCargo = true;
-      installRustc = true;
-    };
-  };
-in {
+}: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -60,19 +51,37 @@ in {
   };
 
   # Add stuff for your user as you see fit:
-  programs.neovim.enable = true;
   home.packages = with pkgs; [
-    steam
-    nvim
     nerdfonts
+    firefox
+    inputs.nixvim.packages.x86_64-linux.default
+    protonup
+    teamspeak5_client
+    lutris
+    lf
   ];
-
+  programs.firefox.enable = true;
   # Enable home-manager and git
   programs.home-manager.enable = true;
+
   programs.git = {
     enable = true;
     userName = "7A1T";
     userEmail = "taitvanstrien@gmail.com";
+  };
+
+  #enable proton
+  home.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "JetbrainsMono Nerd Font";
+    };
+    theme = "Catppuccin-Mocha";
+    shellIntegration.enableBashIntegration = true;
   };
 
   # Nicely reload system units when changing configs

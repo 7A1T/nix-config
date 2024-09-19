@@ -75,9 +75,37 @@
 
   # enable kde
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.desktopmanager.plasma6.enable = true;
-  services.xserver.displayManager.sddm.settings.General.DisplayServer = "x11-user";
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.settings.General.DisplayServer = "x11-user";
+
+  services.xserver.videoDrivers = ["nvidia"];
+  # enable openGL
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.open = false;
+  hardware.nvidia.nvidiaSettings = true;
+
+  # steam wrappers
+  programs.steam.enable = true;
+  programs.steam.remotePlay.openFirewall = true;
+  programs.steam.dedicatedServer.openFirewall = true;
+  programs.steam.localNetworkGameTransfers.openFirewall = true;
+  programs.steam.gamescopeSession.enable = true;
+
+  environment.systemPackages = with pkgs; [mangohud kitty kitty-themes];
+
+  fonts.packages = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
+
+  programs.gamemode.enable = true;
+
+  # desktop ricing
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
+  stylix.image = /nix/store/4wg9ac8v44gpniwrp70imbv841xhy4d8-breeze-6.1.5/share/wallpapers/Next/contents/images/1920x1080.png;
 
   networking.hostName = "nixos";
   # networking.wireless.enable = true; # enables wireless support via wpa_supplicant
@@ -147,8 +175,8 @@
   };
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "taitvs";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "taitvs";
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
